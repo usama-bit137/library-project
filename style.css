@@ -1,0 +1,67 @@
+:root{
+    --background-color: #123451;
+    --font-stack: system-ui;
+}
+
+* { 
+    background-color: var(--background-color);
+    margin: 0; 
+    padding: 0;
+}
+
+.header{
+    padding: 20px;
+
+    background-color: white; 
+    
+    font-family: var(--font-stack);
+    font-weight: bolder;
+
+} 
+
+.dashboard{
+    --dash-item: 200px;
+    --title-size: 10px;
+
+    margin: 10px;
+    padding: 10px; 
+
+    height: var(--dash-item); 
+    width: calc(0.618*var(--dash-item)); 
+
+    background-color: white;
+
+    font-family: var(--font-stack); 
+    font-size: 10px;
+}
+
+.dashboard>div{
+    background-color: white;
+}
+
+.dash-image{
+    height: calc(var(--dash-item)*0.618);
+    width: calc(var(--dash-item)*0.618); 
+}
+
+.dash-info{
+
+    padding-top: 10px;
+}
+
+.dash-info>*{
+    background-color: white;
+}
+
+.title{
+    font-weight: bolder; 
+}
+
+img{
+    height: calc(0.618*200px);
+    width: calc(0.618*200px);
+}
+
+.dashboard :hover {
+
+}
