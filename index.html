@@ -12,61 +12,42 @@
     <h2 class="title">My Library</h2>
     
     <div class="dashboard"> 
-        <div class="dash-item">
+        <div class="dash-item grow">
             <div class="dash-image"><img src="img/lotr.jpg"></div>
+            
             <div class="dash-info">
-
                 <div class="dash-title"> Lord of the Rings </div>
                 <div class="dash-author"> J.R.R Tolkien </div>
                 <div class="dash-pages">1178 pages</div>
-                <div class="stars"></div>
             </div>
             <button class="read-button">read</button>
         </div> 
-
-
-        <div class="dash-item ">
-            <div class="dash-image"><img src="img/lotr.jpg"></div>
-            <div class="dash-info">
-
-                <div class="title"> Lord of the Rings </div>
-                <div class="author"> J.R.R Tolkien </div>
-                <div class="pages">1178 pages</div>
-                <div class="stars"></div>
-            </div>
-            <button class="read-button">read</button>
-        </div>
-        <button onclick = "showForm()" class = "add-item">+</button>
-
+        <button onclick = "showForm()" class = "add-item">
+            <p>+</p>
+        </br>
+            <p class="click">Click to add a new book</p>
+        </button>
     </div>
     
     
     <fieldset id="myForm" style = "display: none;" action="script.js" method="get">
     <p style="background-color: white; margin-bottom: 25px; font-size: 20px; font-weight: bold;">Which book would you like to add?</p>
         <label>Title*:</label>
-        <input type = "text" name = "title" id="title" required>
+        <input type="text" name="title" id="title" required>
 
         <label>Author*:</label>
-        <input type = "text" name = "author" id="author" required>
+        <input type="text" name="author" id="author" required>
         
         <label>Pages:</label>
-        <input type = "text" name = "page" id="pages">
+        <input type="text" name="page" id="pages">
     </br>
-        <button type = "submit" class = "read-button" id="submit-button">Submit</button>
-        <button onclick = "cancelEvent()" class="read-button" style="background-color: red;">Cancel</button>
+        <button type="submit" class="read-button" id="submit-button">Submit</button>
+        <button onclick="cancelEvent()" class="read-button" style="background-color: red;">Cancel</button>
 </fieldset>
 
-
-
-
-
     <script>
-
-    // DOM Manipulation:
         let dashboard = document.querySelector('.dashboard');
         let newButton = document.querySelector('.add-item');
-
-        let dashItemArray = Array.from(document.querySelectorAll('dash-item')); 
 
         function showForm() {
             if (document.getElementById('myForm').style.display == 'none'){
@@ -80,24 +61,69 @@
             document.getElementById('myForm').style.display = 'none';
         }
 
-    
         function Book(title, author, pages) {
             this.title = title; 
             this.author = author; 
             this.pages = pages;
 
             this.addBookToLibrary = function() {
-            return myLibrary.push(this);
+                return myLibrary.push(this);
             }
-
         }
-        let myLibrary = [new Book("A Game of Thrones","George R.R. Martin", "798")]; 
- 
+
+        function addBooksToDashboard(array){
+            // I want this function to loop through my library and
+            // add books to the dashboard. 
+            for (let i = 0; i<array.length; i++){
+               
+                let dashItem = document.createElement('div');
+                let dashImage = document.createElement('div'); 
+                let dashInfo = document.createElement('div');
+                let dashTitle = document.createElement('div');
+                let dashAuthor = document.createElement('div'); 
+                let dashPages = document.createElement('div');
+
+                let image = document.createElement('img');
+                let readButton = document.createElement('button'); 
+
+                image.setAttribute('src', 'img/default.jpg');
+
+                dashItem.classList.add('dash-item');
+                dashItem.classList.add('grow'); 
+                dashImage.classList.add('dash-image'); 
+                dashInfo.classList.add('dash-info');
+                dashTitle.classList.add('dash-title'); 
+                dashAuthor.classList.add('dash-author'); 
+                dashPages.classList.add('dash-pages'); 
+                readButton.classList.add('read-button');
+                dashImage.setAttribute('style', 'background: white'); 
+                dashImage.appendChild(image); 
+
+                dashItem.appendChild(dashImage);
+
+
+                dashTitle.textContent = array[i].title;
+                dashInfo.appendChild(dashTitle);
+                dashAuthor.textContent = array[i].author;
+                dashInfo.appendChild(dashAuthor);
+                dashPages.textContent = `${array[i].pages} pages`; 
+                dashInfo.appendChild(dashPages);
+                dashItem.appendChild(dashInfo);
+                readButton.textContent = 'read'; 
+                dashItem.appendChild(readButton); 
+                dashboard.insertBefore(dashItem, newButton);
+            }
+        }
+
+        let myLibrary = [new Book("A Game of Thrones", "George R.R. Martin", "798"), 
+                         new Book("Frankenstein", "Mary Shelley", "280")]; 
+
+        addBooksToDashboard(myLibrary); 
+        console.log(myLibrary); 
         let newBook = new Book('LOTR', 'JRRT', '1178');
         newBook.addBookToLibrary();
 
-        let forms = document.querySelector('#myForm');
-        const formSubmission = (e)=>{
+        function formSubmission(e) {
             
             e.preventDefault();
 
@@ -106,13 +132,66 @@
                 document.getElementById('pages').value); // this gives me what the user has written
 
                 formData.addBookToLibrary();
-                document.forms[0].reset(); 
+                
                 console.log(myLibrary);
+
+                let dashItem = document.createElement('div');
+                let dashImage = document.createElement('div'); 
+                let dashInfo = document.createElement('div');
+                let dashTitle = document.createElement('div');
+                let dashAuthor = document.createElement('div'); 
+                let dashPages = document.createElement('div');
+
+                let image = document.createElement('img');
+                let readButton = document.createElement('button'); 
+
+                image.setAttribute('src', 'img/default.jpg');
+
+                dashItem.classList.add('dash-item');
+                dashItem.classList.add('grow'); 
+                dashImage.classList.add('dash-image'); 
+                dashInfo.classList.add('dash-info');
+                dashTitle.classList.add('dash-title'); 
+                dashAuthor.classList.add('dash-author'); 
+                dashPages.classList.add('dash-pages'); 
+                readButton.classList.add('read-button');
+                dashImage.setAttribute('style', 'background: white'); 
+                dashImage.appendChild(image); 
+
+                dashItem.appendChild(dashImage);
+
+
+                dashTitle.textContent = formData.title;
+                dashInfo.appendChild(dashTitle);
+                dashAuthor.textContent = formData.author;
+                dashInfo.appendChild(dashAuthor);
+                dashPages.textContent = `${formData.pages} pages`; 
+                dashInfo.appendChild(dashPages);
+                dashItem.appendChild(dashInfo);
+                readButton.textContent = 'read'; 
+
+                dashItem.appendChild(readButton); 
+                dashboard.insertBefore(dashItem, newButton);
+
+                document.getElementById('myForm').style.display = 'none';
+                alert(`"${formData.title}" by ${formData.author} added to My Library!`); 
+        }
+
+        let readButton = document.querySelectorAll('read-button');
+        readButtonArray = Array.from(readButton);
+
+        for (let i = 0; i < readButtonArray.length; i++){
+            color = readButtonArray[i].style.backgroundColor;
+
+            readButtonArray[i].addEventListener('click', ()=>{
+                readButtonArray[i].style.backgroundColor = color === 'green'?  'orange' : 'green';  
+                dashItem.appendChild(readButtonArray[i]) 
+            })
         }
 
         document.addEventListener('DOMContentLoaded', ()=>{
             document.getElementById('submit-button').addEventListener('click', formSubmission ); 
-        });
+        })
         
 
     </script>

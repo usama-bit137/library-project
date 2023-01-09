@@ -1,7 +1,7 @@
 :root{
     --background-color: #123451;
     --font-stack: system-ui;
-    --height: 200px; 
+    --height: 250px; 
     --width: calc(var(--height)*0.618)
 }
 
@@ -31,14 +31,15 @@ h2{
 }
 
 .dashboard{
+    --dash-item: 300px;
     display: grid;
-    grid-template-columns: repeat(4, var(--width));  
-    gap: 50px;
-    margin:auto;
+    grid-template-columns: repeat(5, var(--width));  
+    gap: 75px;
+    margin: 40px;
+    grid-auto-rows: var(--dash-item); 
 }
 
 .dash-item{
-    --dash-item: 200px;
     --title-size: 10px;
 
     margin: 10px;
@@ -55,15 +56,17 @@ h2{
 
 .dash-item>div{
     background-color: white;
+    font-size: 15px;
 }
 
 .dash-image{
+    border: 1px solid gray;
     height: calc(var(--dash-item)*0.618);
     width: calc(var(--dash-item)*0.618); 
+    background-color: white;
 }
 
 .dash-info{
-
     padding-top: 10px;
 }
 
@@ -71,13 +74,17 @@ h2{
     background-color: white;
 }
 
-.title{
+.dash-title{
     font-weight: bolder; 
+    font-size: 20px;
 }
 
+
 img{
-    height: calc(0.618*200px);
-    width: calc(0.618*200px);
+    height: calc(0.618*var(--dash-item));
+    width: calc(0.618*var(--dash-item));
+    background-color: white;
+    margin: auto;
 }
 
 .read-button{
@@ -93,22 +100,24 @@ img{
 }
 
 .add-item{
-    border: 2px solid whitesmoke;
-    padding: 10px; 
+    border: 2px solid grey;
     margin: 10px;
-
-    height: 220px;
-    width: calc(220px*0.618);
-
-    color: whitesmoke;
+    height: calc(var(--dash-item));
+    width: calc(var(--dash-item)*0.618);
+    color: grey;
     font-family: var(--font-stack);
     font-size: 50px;
     font-weight: bolder;
     text-align: center;
 }
 
+.click{
+    font-size: 10px;
+}
+
+
 fieldset{
-    position: absolute;
+    position: fixed;
     --width: 250px;
     --height: var(1.618*var(--width)); 
     height: var(--height); 
@@ -140,4 +149,13 @@ label{
     font-family: var(--font-stack);
     color: var(--background-color);
     background-color: white;
+}
+
+.grow{
+    transition: all .2s ease-in-out;
+}
+
+.grow:hover{
+    transform: scale(1.1); 
+    box-shadow: 10px 5px 5px black;
 }
