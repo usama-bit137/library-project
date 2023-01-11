@@ -12,7 +12,7 @@
     <h2 class="title">My Library</h2>
     
     <div class="dashboard"> 
-        <!--
+        
         <div class="dash-item grow">
             <div class="dash-image"><img src="img/lotr.jpg"></div>
             
@@ -22,12 +22,14 @@
                 <div class="dash-pages">1178 pages</div>
             </div>
             <button class="read-button">read</button>
-        </div></button>--> 
+            <button class="bin-button">🗑️</button>
+        </div>
+
         <button onclick = "showForm()" class = "add-item">
             <p>+</p>
         </br>
             <p class="click">Click to add a new book</p>
-        
+        </button>
     </div>
     
     
@@ -94,6 +96,7 @@
 
                 let image = document.createElement('img');
                 let readButton = document.createElement('button'); 
+                let binButton = document.createElement('button');
 
                 image.setAttribute('src', 'img/default.jpg');
 
@@ -105,6 +108,7 @@
                 dashAuthor.classList.add('dash-author'); 
                 dashPages.classList.add('dash-pages'); 
                 readButton.classList.add('read-button');
+                binButton.classList.add('bin-button');
 
                 dashImage.setAttribute('style', 'background: white'); 
                 dashImage.appendChild(image); 
@@ -115,13 +119,16 @@
                 dashInfo.appendChild(dashTitle);
                 dashAuthor.textContent = array[i].author;
                 dashInfo.appendChild(dashAuthor);
-                dashPages.textContent = `${array[i].pages} pages`; 
-                dashInfo.appendChild(dashPages);
+                dashPages.textContent = `${array[i].pages} pages`;  
+                dashInfo.appendChild(dashPages);     
                 dashItem.appendChild(dashInfo);
-                
-                dashItem.appendChild(readButton); 
 
+                binButton.textContent = '🗑️';
+                dashItem.appendChild(binButton);
+                dashItem.insertBefore(readButton, binButton); 
+               
                 dashboard.insertBefore(dashItem, newButton);
+
 
                 if (array[i].read == 'read'){
                     readButton.setAttribute('style', 'background-color: green;'); 

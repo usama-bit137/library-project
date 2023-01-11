@@ -122,6 +122,12 @@ img{
     text-align: center;
 }
 
+.bin-button{
+    background-color: #345572;
+    border: 0;
+    margin-left: 100px;
+}
+
 .click{
     font-size: 10px;
 }
@@ -153,6 +159,7 @@ fieldset{
 fieldset>*{
     margin: 10px;    
 }
+
 fieldset>*{
     color: white;
 }
