@@ -14,7 +14,7 @@
 }
 
 .header{
-    padding: 20px;
+    padding: 20px 50px;
 
     background-color: white; 
     
@@ -33,7 +33,7 @@ h2{
 }
 
 .title{
-    padding-left: 20px;
+    padding: 50px 20px 5px 50px;
 }
 
 .dashboard{
@@ -81,7 +81,6 @@ h2{
 }
 
 .dash-info>*{
-    background-color: white;
     background-color: #345572;
 }
 
@@ -103,7 +102,7 @@ img{
     border-radius: 10px;
     padding: 7px;
     margin-top: 10px;
-    
+    box-shadow: 5px 5px 5px #123451;
     background-color: green;
 
     color: white;
@@ -112,7 +111,7 @@ img{
 
 .add-item{
     border: 2px solid grey;
-    margin: 10px;
+    margin: 20px 10px;
     height: calc(var(--dash-item));
     width: calc(var(--dash-item)*0.618);
     color: grey;
@@ -131,7 +130,6 @@ img{
 .click{
     font-size: 10px;
 }
-
 
 fieldset{
     position: fixed;
@@ -200,6 +198,7 @@ label{
     width: 0;
     height: 0;
   }
+
 
   .slider {
     position: absolute;

@@ -12,18 +12,6 @@
     <h2 class="title">My Library</h2>
     
     <div class="dashboard"> 
-        
-        <div class="dash-item grow">
-            <div class="dash-image"><img src="img/lotr.jpg"></div>
-            
-            <div class="dash-info">
-                <div class="dash-title"> Lord of the Rings </div>
-                <div class="dash-author"> J.R.R Tolkien </div>
-                <div class="dash-pages">1178 pages</div>
-            </div>
-            <button class="read-button">read</button>
-            <button class="bin-button">🗑️</button>
-        </div>
 
         <button onclick = "showForm()" class = "add-item">
             <p>+</p>
@@ -44,22 +32,20 @@
         
         <label>Pages:</label>
         <input type="text" name="page" id="pages">
-        <p style="font-size: 20px; background-color: #345572">Have you read it? </p>
+        <p style="font-size: 20px; background-color: #345572">Have you read it? 
         
         <label class="switch">
-            <input type="checkbox" id = "read" name="read" value=unchecked>
+            <input type="checkbox" id = "read" name = "read" value=unchecked>
             <span class="slider round"></span>
-          </label>
+          </label></p></br>
 
         <button type="submit" id="submit-button">Submit</button>
         <button onclick="cancelEvent()" id="cancel-button" style="background-color: red;">Cancel</button>
-</fieldset>
+    </fieldset>
 
     <script>
-        let dashboard = document.querySelector('.dashboard');
-        
+        let dashboard = document.querySelector('.dashboard');        
         let readButtonArray = Array.from(document.querySelectorAll('.read-button'));
-
 
         function showForm() {
             if (document.getElementById('myForm').style.display == 'none'){
@@ -70,7 +56,12 @@
         }
 
         function cancelEvent() {
+            alert("You have unsaved changes");
             document.getElementById('myForm').style.display = 'none';
+            document.getElementById('title').value = "";
+            document.getElementById('author').value = "";
+            document.getElementById('pages').value = "";
+            document.getElementById('read').value = "unread"
         }
 
         function Book(title, author, pages, read) {
@@ -78,10 +69,6 @@
             this.author = author; 
             this.pages = pages;
             this.read = read;
-
-            this.addBookToLibrary = function() {
-                return myLibrary.push(this);
-            }
         }
 
         function addBooksToDashboard(array){
@@ -143,6 +130,7 @@
         let myLibrary = [new Book("Lord of the Rings", "J.R.R. Tolkien", "1178", 'read'), 
                          new Book("A Game of Thrones", "George R.R. Martin", "798", 'read'), 
                          new Book("Frankenstein", "Mary Shelley", "280", 'unread')]; 
+
         addBooksToDashboard(myLibrary); 
 
         function formSubmission(e) {
@@ -156,9 +144,9 @@
             }
 
             const formData = new Book(document.getElementById('title').value, 
-            document.getElementById('author').value, 
-            document.getElementById('pages').value, // this gives me what the user has written
-            readStatus);
+                                      document.getElementById('author').value, 
+                                      document.getElementById('pages').value,
+                                      readStatus);
                 
             myLibrary.push(formData);
                 
@@ -174,30 +162,62 @@
             document.getElementById('submit-button').addEventListener('click', formSubmission); 
         })
 
-        setInterval(()=>{
+         var refreshIntervalId = setInterval(()=>{
             let readButtonArray = Array.from(document.querySelectorAll('.read-button'));
-        
-            function addEventListenerList(list){
-            for (let j = 0; j <list.length; j++){
-                list[j].addEventListener('click', ()=>{
-                    if (list[j].style.backgroundColor == 'green'){
-                        list[j].textContent = 'unread'; 
-                        list[j].style.backgroundColor = 'orange';
-                    } else {
-                        list[j].textContent = 'read'; 
-                        list[j].style.backgroundColor = 'green';
-                    }
-                })
+            let binButtonArray = Array.from(document.querySelectorAll('.bin-button'));
+            let dashTitleArray = Array.from(document.querySelectorAll('.dash-title'));
+            let dashAuthorArray = Array.from(document.querySelectorAll('.dash-author'));
+            let dashPagesArray = Array.from(document.querySelectorAll('.dash-pages'));
+            
+            function readButtonToggle(list){
+                for (let j = 0; j <list.length; j++){
+                    list[j].addEventListener('click', ()=>{
+                        if (list[j].style.backgroundColor == 'green'){
+                            list[j].textContent = 'unread'; 
+                            list[j].style.backgroundColor = 'orange';
+                        } else {
+                            list[j].textContent = 'read'; 
+                            list[j].style.backgroundColor = 'green';
+                        }
+                    })
+                }
+                clearInterval()
             }
-        }
 
-        addEventListenerList(readButtonArray);
-        }, 0); 
+            const removeFromArray = function() {
+                const slicedArgs = Array.prototype.slice.call(arguments, 1);
+                var array = arguments[0];  
+                var withinCount = array.length; 
 
-    
+                for (let i = 0; i < slicedArgs.length; i++){
+                
+                    if (array.includes(slicedArgs[i])){
+                        var index = array.indexOf(slicedArgs[i]); 
+                        array.push(array.splice(index, 1)[0]);
+                        withinCount --;
+                    } 
+                
+                } return array.slice(0, withinCount);
+            }
 
-        
+            function binItem(list){
+                for (let k = 0; k < list.length; k++){
+                    list[k].addEventListener('click', ()=>{       
+                        console.log(myLibrary);             
+                        removeFromArray(myLibrary, myLibrary[k]);
+                        console.log(myLibrary[k]); 
+                        dashboard.innerHTML = '<button onclick = "showForm()" class = "add-item"><p>+</p></br><p class="click">Click to add a new book</p></button>';
+                        addBooksToDashboard(myLibrary);
+                        console.log(myLibrary); 
+                    })
+                }
+            }
+
+        binItem(binButtonArray); 
+        readButtonToggle(readButtonArray)}, 1); 
+
     </script>
+    
 
 
 </body>
