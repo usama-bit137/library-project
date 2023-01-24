@@ -172,10 +172,12 @@
         var refreshIntervalId = setInterval(()=>{
             let readButtonArray = Array.from(document.querySelectorAll('.read-button'));
             let binButtonArray = Array.from(document.querySelectorAll('.bin-button'));
+
             let dashTitleArray = Array.from(document.querySelectorAll('.dash-title'));
             let dashAuthorArray = Array.from(document.querySelectorAll('.dash-author'));
             let dashPagesArray = Array.from(document.querySelectorAll('.dash-pages'));
             
+
             function readButtonToggle(list){
                 for (let j = 0; j <list.length; j++){
                     list[j].addEventListener('click', ()=>{
@@ -205,25 +207,24 @@
                     } 
                 
                 } return array.slice(0, withinCount);
-            }
+            } 
 
-            function binItem(list){
-                for (let k = 0; k < list.length; k++){
-                    list[k].addEventListener('click', ()=>{       
-                        console.log(myLibrary);             
-                        removeFromArray(myLibrary, myLibrary[k]);
-                        console.log(myLibrary[k]); 
-                        dashboard.innerHTML = '<button onclick = "new actions().showForm()" class = "add-item"><p>+</p></br><p class="click">Click to add a new book</p></button>';
-                        for (let i = 0; i < myLibrary.length; i++){
-                            myLibrary[i].addBooksToDashboard(); 
-                        }
-                        console.log(myLibrary); 
-                    })
-                }
-            }
-
-        binItem(binButtonArray); 
+        binItem(binButtonArray);
         readButtonToggle(readButtonArray)}, 1); 
+
+        function binItem(list){
+            for (let k = 0; k < list.length; k++){
+                list[k].addEventListener('click', ()=>{       
+                    myLibrary = myLibrary.slice(0, k).concat(myLibrary.slice(k+1)); 
+                    dashboard.innerHTML = '<button onclick = "new actions().showForm()" class = "add-item"><p>+</p></br><p class="click">Click to add a new book</p></button>';
+                    for (let i = 0; i < myLibrary.length; i++){
+                        myLibrary[i].addBooksToDashboard(); 
+                    }
+                    clearInterval(); 
+                    console.log(myLibrary); 
+                })
+            }
+        }
 
     </script>
     
