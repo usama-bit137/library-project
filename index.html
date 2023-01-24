@@ -157,7 +157,7 @@
                 
             document.getElementById('myForm').style.display = 'none';
             alert(`"${formData.title}" by ${formData.author} added to My Library!`); 
-            dashboard.innerHTML = '<button onclick = "showForm()" class = "add-item"><p>+</p></br><p class="click">Click to add a new book</p></button>';
+            dashboard.innerHTML = '<button onclick = "new actions().showForm()" class = "add-item"><p>+</p></br><p class="click">Click to add a new book</p></button>';
                 
             for (let i = 0; i < myLibrary.length; i++){
                 myLibrary[i].addBooksToDashboard(); 
@@ -213,7 +213,7 @@
                         console.log(myLibrary);             
                         removeFromArray(myLibrary, myLibrary[k]);
                         console.log(myLibrary[k]); 
-                        dashboard.innerHTML = '<button onclick = "showForm()" class = "add-item"><p>+</p></br><p class="click">Click to add a new book</p></button>';
+                        dashboard.innerHTML = '<button onclick = "new actions().showForm()" class = "add-item"><p>+</p></br><p class="click">Click to add a new book</p></button>';
                         for (let i = 0; i < myLibrary.length; i++){
                             myLibrary[i].addBooksToDashboard(); 
                         }
