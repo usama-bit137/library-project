@@ -219,9 +219,10 @@
                     dashboard.innerHTML = '<button onclick = "new actions().showForm()" class = "add-item"><p>+</p></br><p class="click">Click to add a new book</p></button>';
                     for (let i = 0; i < myLibrary.length; i++){
                         myLibrary[i].addBooksToDashboard(); 
-                    }
-                    clearInterval(); 
+                    } 
+                    
                     console.log(myLibrary); 
+                    clearInterval();
                 })
             }
         }
