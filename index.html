@@ -13,7 +13,7 @@
     
     <div class="dashboard"> 
 
-        <button onclick = "showForm()" class = "add-item">
+        <button onclick = "new actions().showForm()" class = "add-item">
             <p>+</p>
         </br>
             <p class="click">Click to add a new book</p>
@@ -40,30 +40,12 @@
           </label></p></br>
 
         <button type="submit" id="submit-button">Submit</button>
-        <button onclick="cancelEvent()" id="cancel-button" style="background-color: red;">Cancel</button>
+        <button onclick="new actions().cancelEvent()" id="cancel-button" style="background-color: red;">Cancel</button>
     </fieldset>
 
     <script>
         let dashboard = document.querySelector('.dashboard');        
         let readButtonArray = Array.from(document.querySelectorAll('.read-button'));
-
-        function showForm() {
-            if (document.getElementById('myForm').style.display == 'none'){
-                document.getElementById('myForm').style.display = 'block'; 
-            } else {
-                alert('Please enter the book of your choice');
-            }
-        }
-
-        function cancelEvent() {
-            alert("You have unsaved changes");
-            document.getElementById('myForm').style.display = 'none';
-            document.getElementById('title').value = "";
-            document.getElementById('author').value = "";
-            document.getElementById('pages').value = "";
-            document.getElementById('read').value = "unread"
-        }
-
         class Book {
             constructor(title, author, pages, read) {
                 this.title = title; 
@@ -71,10 +53,8 @@
                 this.pages = pages;
                 this.read = read;
             }
-        }
 
-        function addBooksToDashboard(array){
-            for (let i = 0; i<array.length; i++){
+            addBooksToDashboard(){
                 let newButton = document.querySelector('.add-item');
                 let dashItem = document.createElement('div');
                 let dashImage = document.createElement('div'); 
@@ -104,11 +84,11 @@
 
                 dashItem.appendChild(dashImage);
 
-                dashTitle.textContent = array[i].title;
+                dashTitle.textContent = this.title;
                 dashInfo.appendChild(dashTitle);
-                dashAuthor.textContent = array[i].author;
+                dashAuthor.textContent = this.author;
                 dashInfo.appendChild(dashAuthor);
-                dashPages.textContent = `${array[i].pages} pages`;  
+                dashPages.textContent = `${this.pages} pages`;  
                 dashInfo.appendChild(dashPages);     
                 dashItem.appendChild(dashInfo);
 
@@ -119,7 +99,7 @@
                 dashboard.insertBefore(dashItem, newButton);
 
 
-                if (array[i].read == 'read'){
+                if (this.read == 'read'){
                     readButton.setAttribute('style', 'background-color: green;'); 
                     readButton.textContent = 'read'; 
                 } else {
@@ -128,12 +108,35 @@
                 }
             }
         }
+        
+        class actions extends Book {
+            showForm() {
+                if (document.getElementById('myForm').style.display == 'none'){
+                    document.getElementById('myForm').style.display = 'block'; 
+                } else {
+                    alert('Please enter the book of your choice');
+                }
+            }
+            
+            cancelEvent() {
+                alert("You have unsaved changes");
+                document.getElementById('myForm').style.display = 'none';
+                document.getElementById('title').value = "";
+                document.getElementById('author').value = "";
+                document.getElementById('pages').value = "";
+                document.getElementById('read').value = "unread"
+            }
+        }
+
+
 
         let myLibrary = [new Book("Lord of the Rings", "J.R.R. Tolkien", "1178", 'read'), 
                          new Book("A Game of Thrones", "George R.R. Martin", "798", 'read'), 
                          new Book("Frankenstein", "Mary Shelley", "280", 'unread')]; 
 
-        addBooksToDashboard(myLibrary); 
+        for (let i = 0; i < myLibrary.length; i++){
+                myLibrary[i].addBooksToDashboard(); 
+        }
 
         function formSubmission(e) {
             
@@ -156,7 +159,9 @@
             alert(`"${formData.title}" by ${formData.author} added to My Library!`); 
             dashboard.innerHTML = '<button onclick = "showForm()" class = "add-item"><p>+</p></br><p class="click">Click to add a new book</p></button>';
                 
-            addBooksToDashboard(myLibrary);
+            for (let i = 0; i < myLibrary.length; i++){
+                myLibrary[i].addBooksToDashboard(); 
+            }
             console.log(myLibrary); 
         }
 
@@ -164,7 +169,7 @@
             document.getElementById('submit-button').addEventListener('click', formSubmission); 
         })
 
-         var refreshIntervalId = setInterval(()=>{
+        var refreshIntervalId = setInterval(()=>{
             let readButtonArray = Array.from(document.querySelectorAll('.read-button'));
             let binButtonArray = Array.from(document.querySelectorAll('.bin-button'));
             let dashTitleArray = Array.from(document.querySelectorAll('.dash-title'));
@@ -209,7 +214,9 @@
                         removeFromArray(myLibrary, myLibrary[k]);
                         console.log(myLibrary[k]); 
                         dashboard.innerHTML = '<button onclick = "showForm()" class = "add-item"><p>+</p></br><p class="click">Click to add a new book</p></button>';
-                        addBooksToDashboard(myLibrary);
+                        for (let i = 0; i < myLibrary.length; i++){
+                            myLibrary[i].addBooksToDashboard(); 
+                        }
                         console.log(myLibrary); 
                     })
                 }
